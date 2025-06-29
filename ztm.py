@@ -1,3 +1,48 @@
+
+
+
+
+
+# class PlayerCharacter(): #class
+#     def __init__(self, name, age): #expected attributes or argument when the class is instantiated; 
+#                               #self is to define the Class. In this sample it s the PlayerCharacter
+#         self.name = name #attributes or arguments later in the instatntiation
+#         self.age = age
+        
+#     def run(self):
+#         print('run')
+#         return 'done'
+        
+# player1 = PlayerCharacter('Jedi', 4)
+# print(player1.name)
+# print(player1.age)
+# print(player1.run())
+
+
+
+
+
+# class FirstClass(): #class
+#     pass
+
+# first_class1=FirstClass() #instantiate the FirstClass class
+# print(type(first_class1))
+
+# print(type(None))
+# print(type(True))
+# print(type(5))
+# print(type(5.5))
+# print(type('hi'))
+# print(type([]))
+# print(type(()))
+# print(type({}))
+
+
+
+
+
+
+
 # class Car:
 #     has_gasoline = True # Class object attribute
 #     def __init__(self, brand='Tesla', speed=1):
@@ -100,17 +145,17 @@
 
 
 # 🧪 Using super() to Call Parent’s Method
-class Parent:
-    def greet(self):
-        print("Hello from Parent")
+# class Parent:
+#     def greet(self):
+#         print("Hello from Parent")
 
-class Child(Parent):
-    def greet(self):
-        super().greet()  # 👈 call Parent method
-        print("Hello from Child")
+# class Child(Parent):
+#     def greet(self):
+#         super().greet()  # 👈 call Parent method
+#         print("Hello from Child")
 
-c = Child()
-c.greet()
+# c = Child()
+# c.greet()
 # ➤ Hello from Parent
 # ➤ Hello from Child
 

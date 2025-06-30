@@ -1,7 +1,28 @@
 import xlwings as xw
+
+
+
+
+# --------------- Interface ----------------------------------------------- #
+
+# from tkinter import *
+# from tkinter import ttk
+# root = Tk()
+# frm = ttk.Frame(root, padding=10)
+# frm.grid()
+# ttk.Label(frm, text="Hello World!").grid(column=0, row=0)
+# ttk.Button(frm, text="Quit", command=root.destroy).grid(column=1, row=0)
+# root.mainloop()
+
+# --------------- Interface ----------------------------------------------- #
+
+
+
+
 # wb = xw.books.open(r"/Volumes/DDrive/PhytonZTM/Tex\ At\ Site\ Thread\ Gage\ Worksheet.xlsm")
 # wb = xw.books.open(r"C:\Tex Onsite\Tex_reff\Tex At Site Thread Gage Worksheet.xlsm")
-wb = xw.books.open(r"/Volumes/DDrive/PhytonZTM/Tex At Site Thread Gage Worksheet.xlsm")
+# wb = xw.books.open(r"/Volumes/DDrive/PhytonZTM/Tex At Site Thread Gage Worksheet.xlsm")
+wb = xw.books.open(r'C:\SHERNOF\PhytonZTM\Tex At Site Thread Gage Worksheet.xlsm')
 td = wb.sheets("Test Data")
 vr = wb.sheets("Variables")
 
@@ -141,8 +162,7 @@ def my_tolerance():
                     # print(i[2].get(tol))
                     # vr.range('AF5').value = i[2].get(tol) #getting the value using the key
                     tolerance = i[2].get(tol)
-                    # print(tolerance)
-                    # return tolerance
+                    
                     
     for i, rng in enumerate(deviation_table):
         # print(tolerance)

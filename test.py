@@ -144,32 +144,28 @@ def my_tolerance():
     model = td.range('D11').value
     x = model.index('X')
     dsh = model.index('-')
-    # print(x)
-    # print(dsh)
     dia = int(model[1:x])
-    # print(dia)
     pd = float(model[x + 1:dsh])
-    # print(type(pd))
     tol = str(model[dsh + 1])
-    # print(tol)
     gauge = model[len(model)-1:len(model)]
-    # print(gauge)
+
+    vr.range('Q4').value = dia
+    vr.range('Q5').value = pd
+    vr.range('Q6').value = tol
+    vr.range('Q7').value = gauge
+
     
     for i in tolerance_table:
         if dia in i[0]:
-            if pd in i[1].values():
+            if pd in i[1].values(): #acquire the value of the pitch D
                 if tol in i[2]:
-                    # print(i[2].get(tol))
-                    # vr.range('AF5').value = i[2].get(tol) #getting the value using the key
+                    vr.range('R5').value = i[2].get(tol) #getting the value using the key
                     tolerance = i[2].get(tol)
                     
                     
     for i, rng in enumerate(deviation_table):
-        # print(tolerance)
         if tolerance in rng[0]:
-            print('yes')
-            
-            vr.range('AG5').value = i
+            vr.range('S5').value = i # deviation index
         
 
 

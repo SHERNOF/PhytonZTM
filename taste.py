@@ -1,134 +1,184 @@
 import xlwings as xw
-wb = xw.books.open(r"C:\Tex Onsite\Tex_reff\Tex At Site Thread Gage Worksheet.xlsm")
-sh = wb.sheets("Variables")
+
+# --------------- Interface ----------------------------------------------- #
+
+# from tkinter import *
+# from tkinter import ttk
+# root = Tk()
+# frm = ttk.Frame(root, padding=10)
+# frm.grid()
+# ttk.Label(frm, text="Hello World!").grid(column=0, row=0)
+# ttk.Button(frm, text="Quit", command=root.destroy).grid(column=1, row=0)
+# root.mainloop()
+
+# --------------- Interface ----------------------------------------------- #
+
+# wb = xw.books.open(r"/Volumes/DDrive/PhytonZTM/Tex At Site Thread Gage Worksheet.xlsm")
+wb = xw.books.open(r'C:\Tex Onsite\Tex_reff\Tex At Site Thread Gage Worksheet.xlsm')
+td = wb.sheets("Test Data")
+vr = wb.sheets("Variables")
 
 
 def float_range(start, stop, step):  
   while start < stop:
       yield round(start, 1)
       start += step
-
+      
 deviation_table = [
-        range(24, 51),
-        range(51, 81),
-        range(81, 126),
-        range(126, 201),
-        range(201, 316),
-        range(316, 501),
-        range(501, 671),
+        [range(24, 51),{'du':3},{'dl':-3}, {'worn':-8},{'mu':6},{'ml':-6}],
+        [range(51, 81),{'du':6},{'dl':-1}, {'worn':-7},{'mu':9},{'ml':-5}],
+        [range(81, 126),{'du':11},{'dl':2}, {'worn':-6},{'mu':15},{'ml':-3}],
+        [range(126, 201),{'du':18},{'dl':6}, {'worn':-5},{'mu':23},{'ml':1}],
+        [range(201, 316),{'du':23},{'dl':9}, {'worn':-5},{'mu':30},{'ml':2}],
+        [range(316, 501),{'du':33},{'dl':15}, {'worn':-3},{'mu':42},{'ml':6}],
+        [range(501, 671),{'du':43},{'dl':21}, {'worn':-1},{'mu':54},{'ml':10}],
+        ]
+
+deviation_table_nogo = [
+        [range(24, 51),{'du':6},{'dl':0}, {'worn':-3},{'mu':9},{'ml':-3}],
+        [range(51, 81),{'du':7},{'dl':0}, {'worn':-4},{'mu':10},{'ml':-4}],
+        [range(81, 126),{'du':9},{'dl':0}, {'worn':-5},{'mu':13},{'ml':-5}],
+        [range(126, 201),{'du':11},{'dl':0}, {'worn':-6},{'mu':16},{'ml':-6}],
+        [range(201, 316),{'du':14},{'dl':0}, {'worn':-8},{'mu':21},{'ml':-7}],
+        [range(316, 501),{'du':18},{'dl':0}, {'worn':-10},{'mu':27},{'ml':-9}],
+        [range(501, 671),{'du':22},{'dl':0}, {'worn':-12},{'mu':33},{'ml':-11}],
         ]
 
 
 tolerance_table = [
-        # [float_range(0.99,1.44,0.01),{'pd':0.2},{'4':40,'5':'','6':'','7':'','8':''}], 'catherine's sample
-        [float_range(sh.range("Q44").value,sh.range("R44").value,0.01),{'pd':0.2},{'4':40,'5':'','6':'','7':'','8':''}],
-        [float_range(sh.range("Q45").value,sh.range("R45").value,0.01),{'pd':0.25},{'4':45,'5':56,'6':'','7':'','8':''}],
-        [float_range(sh.range("Q46").value,sh.range("R46").value,0.01),{'pd':0.3},{'4':48,'5':60,'6':75,'7':'','8':''}],
-        [float_range(sh.range("Q47").value,sh.range("R47").value,0.1),{'pd':0.2},{'4':42,'5':'','6':'','7':'','8':''}],
-        [float_range(sh.range("Q48").value,sh.range("R48").value,0.1),{'pd':0.25},{'4':48,'5':60,'6':'','7':'','8':''}],
-        [float_range(sh.range("Q49").value,sh.range("R49").value,0.1),{'pd':0.35},{'4':53,'5':67,'6':85,'7':'','8':''}],
-        [float_range(sh.range("Q50").value,sh.range("R50").value,0.1),{'pd':0.4},{'4':56,'5':71,'6':90,'7':'','8':''}],
-        [float_range(sh.range("Q51").value,sh.range("R51").value,0.1),{'pd':0.45},{'4':60,'5':75,'6':95,'7':'','8':''}],
-        [float_range(sh.range("Q52").value,sh.range("R52").value,0.1),{'pd':0.35},{'4':56,'5':71,'6':90,'7':'','8':''}],
-        [float_range(sh.range("Q53").value,sh.range("R53").value,0.1),{'pd':0.5},{'4':63,'5':80,'6':100,'7':125,'8':''}],
-        [float_range(sh.range("Q54").value,sh.range("R54").value,0.1),{'pd':0.6},{'4':71,'5':90,'6':112,'7':140,'8':''}],
-        [float_range(sh.range("Q55").value,sh.range("R55").value,0.1),{'pd':0.7},{'4':75,'5':95,'6':118,'7':150,'8':''}],
-        [float_range(sh.range("Q56").value,sh.range("R56").value,0.1),{'pd':0.75},{'4':75,'5':95,'6':118,'7':150,'8':''}],
-        [float_range(sh.range("Q57").value,sh.range("R57").value,0.1),{'pd':0.8},{'4':80,'5':100,'6':125,'7':160,'8':200}],
-        [float_range(sh.range("Q58").value,sh.range("R58").value,0.1),{'pd':0.75},{'4':85,'5':106,'6':132,'7':170,'8':''}],
-        [float_range(sh.range("Q59").value,sh.range("R59").value,0.1),{'pd':1},{'4':95,'5':118,'6':150,'7':190,'8':236}],
-        [float_range(sh.range("Q60").value,sh.range("R60").value,0.1),{'pd':1.25},{'4':100,'5':125,'6':160,'7':200,'8':250}],
-        [float_range(sh.range("Q61").value,sh.range("R61").value,0.1),{'pd':1.5},{'4':112,'5':140,'6':180,'7':224,'8':280}],
-        [float_range(sh.range("Q62").value,sh.range("R62").value,0.1),{'pd':1},{'4':100,'5':125,'6':160,'7':200,'8':250}],
-        [float_range(sh.range("Q63").value,sh.range("R63").value,0.1),{'pd':1.25},{'4':112,'5':140,'6':180,'7':224,'8':280}],
-        [float_range(sh.range("Q64").value,sh.range("R64").value,0.1),{'pd':1.5},{'4':118,'5':150,'6':190,'7':236,'8':300}],
-        [float_range(sh.range("Q65").value,sh.range("R65").value,0.1),{'pd':1.75},{'4':125,'5':160,'6':200,'7':250,'8':315}],
-        [float_range(sh.range("Q66").value,sh.range("R66").value,0.1),{'pd':2},{'4':132,'5':170,'6':212,'7':265,'8':335}],
-        [float_range(sh.range("Q67").value,sh.range("R67").value,0.1),{'pd':2.5},{'4':140,'5':180,'6':224,'7':280,'8':355}],
-        [float_range(sh.range("Q68").value,sh.range("R68").value,0.1),{'pd':1},{'4':106,'5':132,'6':170,'7':212,'8':''}],
-        [float_range(sh.range("Q69").value,sh.range("R69").value,0.1),{'pd':1.5},{'4':125,'5':160,'6':200,'7':250,'8':315}],
-        [float_range(sh.range("Q70").value,sh.range("R70").value,0.1),{'pd':2},{'4':140,'5':180,'6':224,'7':280,'8':355}],
-        [float_range(sh.range("Q71").value,sh.range("R71").value,0.1),{'pd':3},{'4':170,'5':212,'6':265,'7':335,'8':425}],
-        [float_range(sh.range("Q72").value,sh.range("R72").value,0.1),{'pd':3.5},{'4':180,'5':224,'6':280,'7':355,'8':450}],
-        [float_range(sh.range("Q73").value,sh.range("R73").value,0.1),{'pd':4},{'4':190,'5':236,'6':300,'7':375,'8':475}],
-        [float_range(sh.range("Q74").value,sh.range("R74").value,0.1),{'pd':4.5},{'4':200,'5':250,'6':315,'7':400,'8':500}],
-        [float_range(sh.range("Q75").value,sh.range("R75").value,0.1),{'pd':1.5},{'4':132,'5':170,'6':212,'7':265,'8':335}],
-        [float_range(sh.range("Q76").value,sh.range("R76").value,0.1),{'pd':2},{'4':150,'5':190,'6':236,'7':300,'8':375}],
-        [float_range(sh.range("Q77").value,sh.range("R77").value,0.1),{'pd':3},{'4':180,'5':224,'6':280,'7':355,'8':450}],
-        [float_range(sh.range("Q78").value,sh.range("R78").value,0.1),{'pd':4},{'4':200,'5':250,'6':315,'7':400,'8':500}],
-        [float_range(sh.range("Q79").value,sh.range("R79").value,0.1),{'pd':5},{'4':212,'5':265,'6':335,'7':425,'8':530}],
-        [float_range(sh.range("Q80").value,sh.range("R80").value,0.1),{'pd':5.5},{'4':224,'5':280,'6':355,'7':450,'8':560}],
-        [float_range(sh.range("Q81").value,sh.range("R81").value,0.1),{'pd':6},{'4':236,'5':300,'6':375,'7':475,'8':600}],
-        [float_range(sh.range("Q82").value,sh.range("R82").value,0.1),{'pd':2},{'4':160,'5':200,'6':250,'7':315,'8':400}],
-        [float_range(sh.range("Q83").value,sh.range("R83").value,0.1),{'pd':3},{'4':190,'5':236,'6':300,'7':375,'8':475}],
-        [float_range(sh.range("Q84").value,sh.range("R84").value,0.1),{'pd':4},{'4':212,'5':265,'6':335,'7':425,'8':530}],                                                   
-        [float_range(sh.range("Q85").value,sh.range("R85").value,0.1),{'pd':6},{'4':250,'5':315,'6':400,'7':500,'8':630}],
-        [float_range(sh.range("Q86").value,sh.range("R86").value,0.1),{'pd':3},{'4':212,'5':265,'6':335,'7':425,'8':530}],
-        [float_range(sh.range("Q87").value,sh.range("R87").value,0.1),{'pd':4},{'4':236,'5':300,'6':375,'7':475,'8':600}],
-        [float_range(sh.range("Q88").value,sh.range("R88").value,0.1),{'pd':6},{'4':265,'5':355,'6':425,'7':530,'8':670}],                                           
+        [float_range(0.99,1.44,0.01),{'pd':0.2},{'4':40,'5':'','6':'','7':'','8':''}],
+        [float_range(0.99,1.44,0.01),{'pd':0.25},{'4':45,'5':56,'6':'','7':'','8':''}],
+        [float_range(0.99,1.44,0.01),{'pd':0.3},{'4':48,'5':60,'6':75,'7':'','8':''}],
+        
+        [float_range(1.4,2.8,0.1),{'pd':0.2},{'4':42,'5':'','6':'','7':'','8':''}],
+        [float_range(1.4,2.8,0.1),{'pd':0.25},{'4':48,'5':60,'6':'','7':'','8':''}],
+        [float_range(1.4,2.8,0.1),{'pd':0.35},{'4':53,'5':67,'6':85,'7':'','8':''}],
+        [float_range(1.4,2.8,0.1),{'pd':0.4},{'4':56,'5':71,'6':90,'7':'','8':''}],
+        [float_range(1.4,2.8,0.1),{'pd':0.45},{'4':60,'5':75,'6':95,'7':'','8':''}],
+        
+        [float_range(2.8,5.6,0.1),{'pd':0.35},{'4':56,'5':71,'6':90,'7':'','8':''}],
+        [float_range(2.8,5.6,0.1),{'pd':0.5},{'4':63,'5':80,'6':100,'7':125,'8':''}],
+        [float_range(2.8,5.6,0.1),{'pd':0.6},{'4':71,'5':90,'6':112,'7':140,'8':''}],
+        [float_range(2.8,5.6,0.1),{'pd':0.7},{'4':75,'5':95,'6':118,'7':150,'8':''}],
+        [float_range(2.8,5.6,0.1),{'pd':0.75},{'4':75,'5':95,'6':118,'7':150,'8':''}],
+        [float_range(2.8,5.6,0.1),{'pd':0.8},{'4':80,'5':100,'6':125,'7':160,'8':200}],
+        
+        [float_range(5.6,11.2,0.1),{'pd':0.75},{'4':85,'5':106,'6':132,'7':170,'8':''}],
+        [float_range(5.6,11.2,0.1),{'pd':1},{'4':95,'5':118,'6':150,'7':190,'8':236}],
+        [float_range(5.6,11.2,0.1),{'pd':1.25},{'4':100,'5':125,'6':160,'7':200,'8':250}],
+        [float_range(5.6,11.2,0.1),{'pd':1.5},{'4':112,'5':140,'6':180,'7':224,'8':280}],
+        
+        [float_range(11.2,22.4,0.1),{'pd':1},{'4':100,'5':125,'6':160,'7':200,'8':250}],
+        [float_range(11.2,22.4,0.1),{'pd':1.25},{'4':112,'5':140,'6':180,'7':224,'8':280}],
+        [float_range(11.2,22.4,0.1),{'pd':1.5},{'4':118,'5':150,'6':190,'7':236,'8':300}],
+        [float_range(11.2,22.4,0.1),{'pd':1.75},{'4':125,'5':160,'6':200,'7':250,'8':315}],
+        [float_range(11.2,22.4,0.1),{'pd':2},{'4':132,'5':170,'6':212,'7':265,'8':335}],
+        [float_range(11.2,22.4,0.1),{'pd':2.5},{'4':140,'5':180,'6':224,'7':280,'8':355}],
+        
+        [float_range(22.4,45,0.1),{'pd':1},{'4':106,'5':132,'6':170,'7':212,'8':''}],
+        [float_range(22.4,45,0.1),{'pd':1.5},{'4':125,'5':160,'6':200,'7':250,'8':315}],
+        [float_range(22.4,45,0.1),{'pd':2},{'4':140,'5':180,'6':224,'7':280,'8':355}],
+        [float_range(22.4,45,0.1),{'pd':3},{'4':170,'5':212,'6':265,'7':335,'8':425}],
+        [float_range(22.4,45,0.1),{'pd':3.5},{'4':180,'5':224,'6':280,'7':355,'8':450}],
+        [float_range(22.4,45,0.1),{'pd':4},{'4':190,'5':236,'6':300,'7':375,'8':475}],
+        [float_range(22.4,45,0.1),{'pd':4.5},{'4':200,'5':250,'6':315,'7':400,'8':500}],
+        
+        [range(45,90),{'pd':1.5},{'4':132,'5':170,'6':212,'7':265,'8':335}],
+        [range(45,90),{'pd':2},{'4':150,'5':190,'6':236,'7':300,'8':375}],
+        [range(45,90),{'pd':3},{'4':180,'5':224,'6':280,'7':355,'8':450}],
+        [range(45,90),{'pd':4},{'4':200,'5':250,'6':315,'7':400,'8':500}],
+        [range(45,90),{'pd':5},{'4':212,'5':265,'6':335,'7':425,'8':530}],
+        [range(45,90),{'pd':5.5},{'4':224,'5':280,'6':355,'7':450,'8':560}],
+        [range(45,90),{'pd':6},{'4':236,'5':300,'6':375,'7':475,'8':600}],
+        
+        [range(90,180),{'4':160,'5':200,'6':250,'7':315,'8':400}],
+        [range(90,180),{'pd':3},{'4':190,'5':236,'6':300,'7':375,'8':475}],
+        [range(90,180),{'pd':4},{'4':212,'5':265,'6':335,'7':425,'8':530}],                                                   
+        [range(90,180),{'pd':6},{'4':250,'5':315,'6':400,'7':500,'8':630}],
+        
+        [range(180,355),{'pd':3},{'4':212,'5':265,'6':335,'7':425,'8':530}],
+        [range(180,355),{'pd':4},{'4':236,'5':300,'6':375,'7':475,'8':600}],
+        [range(180,355),{'pd':6},{'4':265,'5':355,'6':425,'7':530,'8':670}],                                           
         ]
 
-def get_tolerance():
-     tg = str(sh.range("Q7").value)
-     dia = int(sh.range("Q5").value)
-     pd = float(sh.range("Q6").value)
-     fo = False
-     for item in tolerance_table:
-         
-         if dia in item[0]:  
-             fo = True
-             if pd in item[1].values():
-                 fo = True 
-                 if tg in item[2]:
-                     fo = True
-                     sh.range('R5').value = item[2].get(tg)
-                 else:
-                    fo=False
-                    sh.range('A3').value = fo
-
-def tolerance_index():
-    tolerance = int(sh.range("R5").value)
-    for i, rng in enumerate(deviation_table):
-        if tolerance in rng:
-            sh.range('S5').value = i
-            if tolerance not in rng:
-                print('Tolerance {tolerance} not found in any range')
-
-get_tolerance()
-tolerance_index()
-
-'''
-- the get_tolerance() and tolerance_index() are the functions to retrieve the tolerance of the given thread gage. once tolerance is known
-  it needs not to define the index to be use in getting the different specs like the Devation, worn, major and minor diameter tolerances.
-- The ranges from 4.2 are converted from float to integer by using the integer generator using the float_range()
-- it was decided to put the table hard coded in this file to maintain integrity of the specs 
-- issue was found when getting the index in tolerance_index() due to a typo error in a range of the deviation_table. this was fixed by using the enumerate() function which is a function to get and display the index and a value.
-
-'''
+pitch_34p_fdforG_minord = [
+        [{'pitch':0.2},(0.13),(17),{'4':38,'5':'','6':'','7':'','8':''}],
+        [{'pitch':0.25},(0.162),(18),{'4':45,'5':'','6':'','7':'','8':''}],
+        [{'pitch':0.3},(0.195),(18),{'4':53,'5':67,'6':85,'7':'','8':''}],
+        [{'pitch':0.35},(0.227),(19),{'4':63,'5':80,'6':100,'7':'','8':''}],
+        [{'pitch':0.4},(0.26),(19),{'4':71,'5':90,'6':112,'7':'','8':''}],
+        [{'pitch':0.45},(0.292),(20),{'4':80,'5':100,'6':125,'7':'','8':''}],
+        [{'pitch':0.5},(0.325),(20),{'4':90,'5':112,'6':140,'7':180,'8':''}],
+        [{'pitch':0.6},(0.39),(21),{'4':100,'5':125,'6':160,'7':200,'8':''}],
+        [{'pitch':0.7},(0.455),(22),{'4':112,'5':140,'6':180,'7':224,'8':''}],
+        [{'pitch':0.75},(0.487),(22),{'4':118,'5':150,'6':190,'7':236,'8':''}],
+        [{'pitch':0.8},(0.52),(24),{'4':125,'5':160,'6':200,'7':250,'8':315}],
+        [{'pitch':1},(0.65),(26),{'4':150,'5':190,'6':236,'7':300,'8':375}],
+        [{'pitch':1.25},(0.812),(28),{'4':170,'5':212,'6':265,'7':335,'8':425}],
+        [{'pitch':1.5},(0.974),(32),{'4':190,'5':236,'6':300,'7':375,'8':475}],
+        [{'pitch':1.75},(1.137),(34),{'4':212,'5':265,'6':335,'7':425,'8':530}],
+        [{'pitch':2},(1.3),(38),{'4':236,'5':300,'6':375,'7':475,'8':600}],
+        [{'pitch':2.5},(1.624),(42),{'4':236,'5':300,'6':375,'7':475,'8':600}],
+        [{'pitch':3},(1.95),(48),{'4':315,'5':400,'6':500,'7':630,'8':800}],
+        [{'pitch':3.5},(2.273),(53),{'4':355,'5':450,'6':560,'7':710,'8':900}],
+        [{'pitch':4},(2.598),(60),{'4':375,'5':475,'6':600,'7':750,'8':950}],
+        [{'pitch':4.5},(2.923),(63),{'4':425,'5':530,'6':670,'7':850,'8':1060}],
+        [{'pitch':5},(3.25),(71),{'4':450,'5':560,'6':710,'7':900,'8':1120}],
+        [{'pitch':5.5},(3.572),(75),{'4':475,'5':600,'6':750,'7':950,'8':'1180'}],
+        [{'pitch':6},(3.897),(80),{'4':500,'5':630,'6':800,'7':1000,'8':1250}],        
+    ]
 
 
+def thread_gage(): 
+    model = td.range('D11').value
+    x = model.index('X')
+    dsh = model.index('-')
+    dia = int(model[1:x])
+    pd = float(model[x + 1:dsh])
+    tol = str(model[dsh + 1])
+    gauge = model[len(model)-1:len(model)]
+    vr.range('Q5').value = dia
+    vr.range('Q6').value = pd
+    vr.range('Q7').value = tol
+    vr.range('Q8').value = gauge
 
+    for i in tolerance_table:
+        if dia in i[0]:
+            if pd in i[1].values(): #acquire the value of the pitch D
+                if tol in i[2]:
+                    vr.range('R5').value = i[2].get(tol) #getting the value using the key
+                    tolerance = i[2].get(tol)
+                    for i, rng in enumerate(deviation_table):
+                        if tolerance in rng[0]:
+                            vr.range('S5').value = i # deviation index
+                            
 
+    # minor diameter
+    for item in pitch_34p_fdforG_minord:
+        if pd in item[0].values():
+            if tol in item[3]:
+                vr.range('AA4').value = item[3].get(tol) #acquire the key for the minor diameter
+    
+    #for G
+    for item in pitch_34p_fdforG_minord:
+        if gauge == 'G':
+            if pd in item[0].values():
+                vr.range('R8') .value = item[2]/1000
+        else:
+               vr.range('R8') .value = ''
 
-# def tol_ind():
-#     tolerance = int(sh.range("A2").value)
-#     in_range = False
-#     print(tolerance)
-#     for item in deviation_table:
-#         # print(item)
-#         if tolerance in item:
-#             # print('Yses')
-#             print(item.index(tolerance))
-   
+        
 
-# tolerance_index()
+thread_gage()
+    
+        
+# matrix = [
+# [1, 2, 3],
+# [4, 5, 6],
+# [7, 8, 9]
+# ]
 
-# deviation_table = [
-#         float_range(sh.range("Q18").value,sh.range("R18").value),
-#         float_range(sh.range("Q19").value,sh.range("R19").value),
-#         float_range(sh.range("Q20").value,sh.range("R20").value),
-#         float_range(sh.range("Q21").value,sh.range("R21").value),
-#         float_range(sh.range("Q22").value,sh.range("R22").value),
-#         float_range(sh.range("Q23").value,sh.range("R23").value),
-#         float_range(sh.range("Q24").value,sh.range("R24").value),
-#         ]
+# first_column = [row[0] for row in matrix]
+# print(first_column)
+    
+

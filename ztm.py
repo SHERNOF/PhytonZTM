@@ -1,4 +1,24 @@
+# map, filter, zip and reduce
+# map()
+my_list = [1,2,3]
+def multiply_by_2(item):   
+    return item*2
 
+def only_odd(item):
+    return item % 2 != 0
+
+print(list(filter(only_odd,my_list)))
+print(my_list)
+
+
+# Functional Programming
+# new_list = []
+# def multiply_by_2(li):
+#     for item in li:
+#         new_list.append(item*2)
+#     return new_list
+
+# print(multiply_by_2([1,2,3]))
 
 
 

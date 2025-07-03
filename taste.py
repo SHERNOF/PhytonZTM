@@ -13,8 +13,8 @@ import xlwings as xw
 
 # --------------- Interface ----------------------------------------------- #
 
-# wb = xw.books.open(r"/Volumes/DDrive/PhytonZTM/Tex At Site Thread Gage Worksheet.xlsm")
-wb = xw.books.open(r'C:\Tex Onsite\Tex_reff\Tex At Site Thread Gage Worksheet.xlsm')
+wb = xw.books.open(r"/Volumes/DDrive/PhytonZTM/Tex At Site Thread Gage Worksheet.xlsm")
+# wb = xw.books.open(r'C:\Tex Onsite\Tex_reff\Tex At Site Thread Gage Worksheet.xlsm')
 td = wb.sheets("Test Data")
 vr = wb.sheets("Variables")
 

@@ -1,14 +1,199 @@
+# Under the hood of generators
+def special_for(iterable):
+  iterator = iter(iterable)
+  while True:
+    try:
+      print(iterator)
+      next(iterator)
+    except StopIteration:
+      break
+  
+special_for([1,2,3])
+
+
+# class MyGen:
+#   current = 0
+#   def __init__(self, first, last):
+#     self.first = first
+#     self.last = last
+#     MyGen.current = self.first #this line allows us to use the current number as the starting point for the iteration
+
+#   def __iter__(self):
+#     return self
+
+#   def __next__(self):
+#     if MyGen.current < self.last:
+#       num = MyGen.current
+#       MyGen.current += 1
+#       return num
+#     raise StopIteration
+
+# gen = MyGen(1,100)
+# for i in gen:
+#     print(i)
+
+
+# Generator
+
+# from time import time
+# def performance(fn):
+#     def wrapper(*args, **kwargs):
+#         t1 = time()
+#         result = fn(*args, *kwargs)
+#         t2 = time()
+#         print(f'took {t2-t1} s')
+#         return result
+#     return wrapper
+# @performance
+# def long_time():
+#     print('1')
+#     for i in range(100000000): #it finishes after.
+#         i*5
+
+# @performance
+# def long_time2():
+#     print('2')
+#     for i in list(range(100000000)): #it took longer.
+#         i*5
+
+# long_time()
+# long_time2()
+
+
+# def gen_function(num):
+#     for i in range(num):
+#         yield i * 2
+        
+# g = gen_function(100)
+# next(g)
+# next(g)
+# print(next(g))
+
+
+# for item in gen_function(100):
+#     print(item)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# def make_list(num):
+#     result = []
+#     for i in range(num):
+#         result.append(i)
+        
+#     return result
+
+# my_list = make_list(100)
+# print(my_list)
+    
+
+    
+
+
+# Error Handling 3
+# while True: #this allows the code to continue to run
+#     try:
+#         age = int(input('what is your age?'))
+#         10/age
+#         raise ValueError('Hey cut it our')
+#     except ZeroDivisionError:
+#         print('enter a number > 0')
+#         break
+#     else:
+#         print('thank yoi')
+#     finally:
+#         print('ok, finally done')
+
+
+
+
+# Error ahndling 2
+# def sum(num1, num2):
+#     try:
+#         return num1 + num2
+#     except (TypeError, ZeroDivisionError): # way of writing multiple exceprions
+#         print('oopps')
+        
+# print(sum('1',2))
+
+
+# Error Handling
+# while True: #this allows the code to continue to run
+#     try:
+#         age = int(input('what is your age?'))
+#         10/age
+#     except ZeroDivisionError:
+#         print('enter a number > 0')
+#     else:
+#         print('thank yoi')
+#         break #this makes the code to stop
+
+
+
+
+
+# lambda exercide
+
+# #square
+# my_list = [5,4,3]
+# print(list(map(lambda item: item ** 2, my_list)))
+
+# #list sorint
+# a = [(0,2), (10, -1), (3,2)]
+# a.sort(key=lambda x: x[1])
+# print(a)
+
+
+
+
+
 # map, filter, zip and reduce
 # map()
-my_list = [1,2,3]
-def multiply_by_2(item):   
-    return item*2
+# from functools import reduce
+# my_list = [1,2,3]
+# your_list = [10,20,30]
 
-def only_odd(item):
-    return item % 2 != 0
+# # def multiply_by_2(item):   
+# #     return item*2
 
-print(list(filter(only_odd,my_list)))
-print(my_list)
+# # print(list(map(lambda item: item * 2, my_list ))) #use lambda instead of the multiply_by_2()
+# # print(my_list)
+
+# # def only_odd(item):
+# #     return item % 2 != 0
+
+# print(list(filter(lambda item: item % 2 != 0, my_list ))) #use lambda instead of the only_odd(item)
+# print(my_list)
+
+# def accumulator(acc, item):
+#     print(acc, item)
+#     return acc + item
+    
+# print(reduce(accumulator, my_list, 0))
+# print(my_list)
 
 
 # Functional Programming
